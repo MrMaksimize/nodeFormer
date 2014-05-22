@@ -1,0 +1,31 @@
+{
+  "name": "nodeFormer",
+  "version": "0.0.0",
+  "description": "Form Generation For Node",
+  "main": "form.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/MrMaksimize/nodeFormer"
+  },
+  "keywords": [
+    "form",
+    "forms"
+  ],
+  "author": "Maksim Pecherskiy <max@maksimize.com> (http://mrmaksimize.com/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/MrMaksimize/nodeFormer/issues"
+  },
+  "homepage": "https://github.com/MrMaksimize/nodeFormer",
+  "dependencies": {
+    "string": "^1.8.1",
+    "underscore": "^1.6.0"
+  },
+  "devDependencies": {
+    "chai": "^1.9.1",
+    "mocha": "^1.19.0"
+  }
+}
