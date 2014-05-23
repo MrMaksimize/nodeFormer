@@ -8,7 +8,7 @@ function Form(formConfig, extraParams) {
   this.form = formConfig.form || {};
   this.fields = formConfig.fields;
   this.options = _.extend({
-    choices: []
+    choicesList: []
   }, extraParams);
 }
 

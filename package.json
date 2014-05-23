@@ -14,7 +14,11 @@
     "form",
     "forms"
   ],
-  "author": "Maksim Pecherskiy <max@maksimize.com> (http://mrmaksimize.com/)",
+  "author": {
+    "name": "Maksim Pecherskiy",
+    "email": "max@maksimize.com",
+    "url": "http://mrmaksimize.com/"
+  },
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/MrMaksimize/nodeFormer/issues"

@@ -19,7 +19,13 @@ var build = {
   },
 
   choices: function(fieldObject, fieldInfo, fieldOptions) {
-    var choicesList = fieldOptions.choices[fieldObject.getName('direct')] || [];
+    var choicesList = [];
+    var directName = fieldObject.getName('direct');
+
+    if (fieldOptions.choicesList && fieldOptions.choicesList[directName]) {
+      var choicesList = fieldOptions.choicesList[fieldObject.getName('direct')];
+    }
+    //var choicesList = fieldOptions.choicesList[fieldObject.getName('direct')] || [];
     var choices = {};
     _.each(choicesList, function(element, index) {
       choices[element] = element;
@@ -31,9 +37,10 @@ var build = {
 
 // Constructor
 function Field(fieldInfo, fieldOptions) {
+  var fieldInfo = fieldInfo || {};
   this.name = fieldInfo.name || '';
   this.label = fieldInfo.label || '';
-  this.widget = fieldInfo.widget || '';
+  this.widget = fieldInfo.widget || 'text';
   this.required = fieldInfo.required || false;
   this.choices = fieldInfo.choices || [];
   // Construct each method using private builders.
@@ -41,7 +48,7 @@ function Field(fieldInfo, fieldOptions) {
     // All passed in options always override.
     if (_.isEmpty(element) && index != 'required') {
       if (index == 'name') {
-        throw new Error ('Cannot be missing' + index);
+        throw new Error ('Cannot be missing ' + index);
       }
       if (!_.isFunction(build[index])) {
         throw new Error ('Dont know how to build ' + index);
