@@ -1,5 +1,0 @@
-var fields = {};
-
-
-
-exports = fields;

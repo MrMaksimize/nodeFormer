@@ -2,7 +2,6 @@ var _ = require('underscore');
 var string = require('string');
 var chai = require('chai');
 var should = chai.should();
-var fixtures = require('./fixtures');
 var Field = require('../field');
 
 describe('Field', function() {
