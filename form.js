@@ -15,6 +15,10 @@ function Form(formConfig, extraParams) {
 // class methods
 Form.prototype.buildFields = function() {
   _.each(this.fields, function(config, confName) {
+    // Infer field name.
+    if (_.isUndefined(config.name)) {
+      config.name = confName;
+    }
     var field = new Field(config, this.options);
     this.fields[confName] = field;
   }, this);
