@@ -38,26 +38,20 @@ var build = {
 // Constructor
 function Field(fieldInfo, fieldOptions) {
   var fieldInfo = fieldInfo || {};
-  this.name = fieldInfo.name || '';
-  this.label = fieldInfo.label || '';
-  this.widget = fieldInfo.widget || 'text';
-  this.required = fieldInfo.required || false;
-  this.choices = fieldInfo.choices || [];
-  // Construct each method using private builders.
-  _.each(this, function(element, index) {
-    // All passed in options always override.
-    if (_.isEmpty(element) && index != 'required') {
-      if (index == 'name') {
-        throw new Error ('Cannot be missing ' + index);
-      }
-      if (!_.isFunction(build[index])) {
-        throw new Error ('Dont know how to build ' + index);
-      }
+  var field = _.extend({
+    name: '',
+    label: '',
+    widget: 'text',
+    required: false,
+    choices: []
+  }, fieldInfo);
 
-      // We already got the stuff incoming from field info, let's fall back to either
-      // things coming in from fieldOptions, or internal methods.
+
+  // Construct each element using private builders.
+  _.each(field, function(element, index) {
+    this[index] = element;
+    if (build[index])
       this[index] = build[index](this, fieldInfo, fieldOptions);
-    }
   }, this);
 }
 

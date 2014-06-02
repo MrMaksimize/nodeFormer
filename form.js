@@ -17,11 +17,11 @@ Form.prototype.buildFields = function() {
   _.each(this.fields, function(config, confName) {
     // Infer field name.
     config.name = _.isUndefined(config.name) ? confName : config.name;
-    var field = new Field(config, this.options);
-    this.fields[confName] = field;
+    this.fields[confName] = new Field(config, this.options);
   }, this);
 }
 
+// TODO - dep this
 Form.prototype.getFieldsForRender = function() {
   var fieldsForRender = {};
   _.each(this.fields, function(field, fieldKey) {
