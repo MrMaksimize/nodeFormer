@@ -50,7 +50,7 @@ function Field(fieldInfo, fieldOptions) {
   // Construct each element using private builders.
   _.each(field, function(element, index) {
     this[index] = element;
-    if (build[index])
+    if (build[index] && _.isEmpty(element))
       this[index] = build[index](this, fieldInfo, fieldOptions);
   }, this);
 }
