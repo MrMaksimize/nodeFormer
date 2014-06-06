@@ -4,7 +4,7 @@ var S = require('string');
 var build = {
   label: function(fieldObject, fieldInfo, fieldOptions) {
     // Can depend on name being there.
-    return S(fieldObject.getName('direct')).humanize().s;
+    return fieldObject.getName('label');
   },
 
   widget: function(fieldObject, fieldInfo, fieldOptions) {
@@ -36,22 +36,25 @@ var build = {
 };
 
 // Constructor
-function Field(fieldInfo, fieldOptions) {
+function Field(fieldInfo, formOptions) {
   var fieldInfo = fieldInfo || {};
-  var field = _.extend({
-    name: '',
-    label: '',
+  var formOptions = formOptions || {};
+  // Set proper defaults;
+  var defaults = {
+    name: 'fieldName',
+    label: 'fieldLabel',
     widget: 'text',
     required: false,
     choices: []
-  }, fieldInfo);
+  };
 
+  var field = _.extend(defaults, fieldInfo);
 
   // Construct each element using private builders.
   _.each(field, function(element, index) {
     this[index] = element;
-    if (build[index] && _.isEmpty(element))
-      this[index] = build[index](this, fieldInfo, fieldOptions);
+    if (build[index] && (_.isEmpty(element) || element == defaults[index]))
+      this[index] = build[index](this, fieldInfo, formOptions);
   }, this);
 }
 
@@ -62,6 +65,10 @@ Field.prototype.getName = function(use) {
     if (use == 'direct') {
       return brokenPath.pop();
     }
+    if (use == 'label') {
+      return S(brokenPath.pop()).humanize().s;
+    }
+    // Form array fields.
     else {
       var name = '';
       _.each(brokenPath, function(element, index){
@@ -70,7 +77,7 @@ Field.prototype.getName = function(use) {
       return name;
     }
   }
-  return this.name;
+  return use == 'label' ? S(this.name).humanize().s : this.name;
 };
 
 Field.prototype.getRenderConfig = function() {

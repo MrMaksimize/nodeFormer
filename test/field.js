@@ -8,29 +8,47 @@ describe('Field', function() {
   before(function() {
   });
 
-  it ('should throw error when name is not passed', function() {
-    try {
-      var field = new Field();
-    } catch(err) {
-      err.message.should.equal('Cannot be missing name');
-    }
+
+  it ('should set proper defaults when nothing is passed', function() {
+    var field = new Field();
+    field.name.should.equal('fieldName');
+    field.label.should.equal('Field name');
+    field.widget.should.equal('text');
+    field.required.should.be.false;
+    field.choices.should.be.an('object');
   });
 
-  it ('should set proper defaults', function() {
-    var defaults = {
+  it ('should infer at minimum configuration', function() {
+    var fieldConf = {
       fieldName: 'monkeyField',
       fieldLabel: 'Monkey field',
       widget: 'text',
       required: false,
     }
-    var fieldInfo = { name: defaults.fieldName };
+    var fieldInfo = { name: fieldConf.fieldName };
     var fieldOptions = { choices: [] };
     var field = new Field(fieldInfo, fieldOptions);
-    field.name.should.equal(defaults.fieldName);
-    field.label.should.equal(defaults.fieldLabel);
-    field.widget.should.equal(defaults.widget);
+    field.name.should.equal(fieldConf.fieldName);
+    field.label.should.equal(fieldConf.fieldLabel);
+    field.widget.should.equal(fieldConf.widget);
     field.required.should.be.false;
     field.choices.should.be.an('object');
+  });
+
+  it ('should get its own name properly based on use', function() {
+    var complexField = new Field({ name: 'levelOne.levelTwo.levelThree' });
+    var simpleField = new Field({ name: 'simpleFieldName' });
+
+    // Complex Field;
+    complexField.getName('direct').should.equal('levelThree');
+    complexField.getName('label').should.equal('Level three');
+    complexField.getName('form').should.equal('levelOne[levelTwo][levelThree]');
+
+    // Simple Field;
+    simpleField.getName('direct').should.equal('simpleFieldName');
+    simpleField.getName('label').should.equal('Simple field name');
+    simpleField.getName('form').should.equal('simpleFieldName');
+
   });
 
 
