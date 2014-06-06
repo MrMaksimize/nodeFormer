@@ -51,5 +51,13 @@ describe('Field', function() {
 
   });
 
+  it ('should properly get its own render config', function() {
+    var field = new Field({ name: 'something.awesomeName' });
+    var renderConfig = field.getRenderConfig();
+    renderConfig.label.should.equal('Awesome name');
+    renderConfig.header.should.equal(renderConfig.label);
+    renderConfig.name.should.equal('something[awesomeName]');
+  });
+
 
 });
