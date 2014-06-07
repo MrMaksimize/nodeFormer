@@ -26,7 +26,17 @@ var string = require('string');
 // Verify choices are properly set through config.
 
 var formConfig = {
-    options: {},
+    options: {
+      choicesList: {
+        canBeReappliedFor: ['No', 'Yes'],
+        eligibleBusinessLocation: [
+          'Anywhere In Puerto Rico',
+          'Municipality in Puerto Rico',
+          'Region in Puerto Rico',
+          'Outside of Puerto Rico'
+        ],
+      }
+    },
     fields: {
       // We should be able to infer the widget from this.
       title:  { type: String, required: true, unique: true, label: 'Program Title'},

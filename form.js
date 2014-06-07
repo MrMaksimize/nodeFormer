@@ -33,13 +33,13 @@ Form.fromConf = function(conf, extraParams) {
 };
 
 // Overload constructor.
-Form.fromSchema = function(schema, extraParams) {
+Form.fromSchema = function(schema, options) {
   var paths = schema.paths;
   var virtuals = schema.virtuals;
   // Process incoming schema into FormConfig
   // @TODO -- virtuals later.
   var formConfig = {
-    options: {},
+    options: _.extend({}, options),
     fields: {}
   };
   _.each(paths, function(path, pathName) {

@@ -33,7 +33,9 @@ describe('Form', function() {
     // Verify that choices properly got injected at the form level.
     // Verify that multiple fields properly got handled.
   });
+  it('should create itself from a conf object', function() {});
 
+  it('schema and conf object config should generate same form config', function() {});
   /*it('should properly translate schema to form configurations', function(){
     var form = nodeFormer.fromSchema(schema);
     var refFields = formConfig.fields;

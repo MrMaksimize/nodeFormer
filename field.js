@@ -53,13 +53,14 @@ function Field(fieldInfo, formOptions) {
     choices: []
   };
 
-  var field = _.extend(defaults, fieldInfo);
+  var field = _.extend(_.clone(defaults), fieldInfo);
 
   // Construct each element using private builders.
   _.each(field, function(element, index) {
     this[index] = element;
-    if (build[index] && (_.isEmpty(element) || element == defaults[index]))
+    if (build[index] && (_.isEmpty(element) || element == defaults[index])) {
       this[index] = build[index](this, fieldInfo, formOptions);
+    }
   }, this);
 }
 

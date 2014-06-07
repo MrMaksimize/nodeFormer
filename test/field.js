@@ -1,8 +1,11 @@
 var _ = require('underscore');
-var string = require('string');
+var S = require('string');
 var chai = require('chai');
 var should = chai.should();
+var nodeFormer = require('../form');
 var Field = require('../field');
+var mongoose = require('mongoose');
+var mocks = require('./mocks.js');
 
 describe('Field Object Operations', function() {
   before(function() {
@@ -18,6 +21,11 @@ describe('Field Object Operations', function() {
     field.choices.should.be.an('object');
   });
 
+  it ('should let me override the label on creation', function() {
+    var field = new Field({name: 'someField', label: 'A Great Unrelated Label'});
+    field.label.should.equal('A Great Unrelated Label');
+  });
+
   it ('should infer at minimum configuration', function() {
     var fieldConf = {
       fieldName: 'monkeyField',
@@ -25,9 +33,9 @@ describe('Field Object Operations', function() {
       widget: 'text',
       required: false,
       default: '',
-      multiple: false
+      multiple: false,
       prefix: '',
-      suffix: '',
+      suffix: ''
     }
     var fieldInfo = { name: fieldConf.fieldName };
     var fieldOptions = { choices: [] };
@@ -66,19 +74,71 @@ describe('Field Object Operations', function() {
 });
 
 describe('Field configuration translations and inference', function() {
-
-  it('should determine proper widget from type', function() {
-
+  var form = {};
+  before(function() {
+    // Use from schema for now, but @TODO switch to using from conf
+    var formConfig = mocks.formConfig;
+    // Mock schema from above configurations.
+    var schema = new mongoose.Schema(formConfig.fields);
+    form = nodeFormer.fromSchema(schema, formConfig.options);
   });
 
-  it('should get choices based on type and where they are passed', function() {});
+  it('should determine proper widget from type', function() {
+    // String
+    form.fields.title.widget.should.equal('text');
+    // Number
+    form.fields.applicationCost.widget.should.equal('text');
+    // Date
+    form.fields.applicationDeadline.widget.should.equal('date');
+    // Boolean
+    // Nested
+    form.fields['agency.agencyContact.name'].widget.should.equal('text');
+  });
+
+  it('should get choices based on type and where they are passed', function() {
+    // Inline with configs.
+    // I FORGOT HOW TO DO THIS IN SHOULD
+    //form.fields.additionalDemographics.choices.
+    console.log(form);
+    // In external list.
+    //form.fields.canBeReappliedFor
+    //form.fields.eligibleBusinessLocation
+  });
   it('should properly deal with nested structures', function() {});
-  it('should default to required false unless explicit', function(){});
-  it('should have capability to infer labels from names', function(){});
-  it('should handle default fields', function(){});
-  it('should have capability to override widget in configuration', function(){})
-  it('should flag multiplicity if passed', function(){});
-  it('should properly set suffix and prefix.', function(){});
+  it('should default to required false unless explicit', function(){
+     // Check that we can override the required;
+     form.fields.title.required.should.be.true;
+     // And that it sets as default.
+     form.fields.canBeReappliedFor.required.should.be.false;
+  });
+  it('should have capability to infer labels from names', function(){
+    // Check that we can override the label;
+    form.fields['agency.agencyContact.name'].label.should.equal('Agency Contact Name');
+    form.fields.title.label.should.equal('Program Title');
+    // And that the system can infer it.
+    form.fields.canBeReappliedFor.label.should.equal('Can be reapplied for');
+    form.fields.applicationCost.label.should.equal('Application cost');
+  });
+  it('should handle default fields', function(){
+    // Lets make sure that default is always blank unless passed and overriden.
+    form.fields.title.default.should.equal('');
+    form.fields.canBeReappliedFor.default.should.be.false;
+  });
+  it('should have capability to override widget in configuration', function(){
+    // Default widget should fall to text for strings.
+    form.fields.title.widget.should.equal('text');
+    form.fields['agency.agencyContact.name'].widget.should.equal('text');
+    // Overriden widget
+    form.fields.purpose.widget.should.equal('textArea');
+    form.fields['agency.agencyContact.email'].widget.should.equal('email');
+  });
+  it('should flag multiplicity if passed', function(){
+    // Still needs implementing.
+  });
+  it('should properly set suffix and prefix.', function(){
+    // Still needs implementing.
+  });
 
 });
+
 
