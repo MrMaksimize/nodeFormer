@@ -3,17 +3,13 @@ var S = require('string');
 var Field = require('./field');
 
 // Constructor
-function Form(formConfig, extraParams) {
-  // always initialize all instance properties
-  this.form = formConfig.form || {};
+function Form(formConfig) {
+  // Always initialize all instance properties
   this.fields = formConfig.fields;
   this.options = _.extend({
     choicesList: []
-  }, extraParams);
-}
+  }, formConfig.options);
 
-// class methods
-Form.prototype.buildFields = function() {
   _.each(this.fields, function(config, confName) {
     // Infer field name.
     config.name = _.isUndefined(config.name) ? confName : config.name;
@@ -27,7 +23,13 @@ Form.prototype.getFieldsForRender = function() {
   _.each(this.fields, function(field, fieldKey) {
     fieldsForRender[fieldKey] = field.getRenderConfig();
   }, this);
+  // @TODO -- this should be getting taken care of at fromSchema.
   return _.omit(fieldsForRender, ['__v', '_id']);
+};
+
+// Overload constructor for constructing from a conf object.
+
+Form.fromConf = function(conf, extraParams) {
 };
 
 // Overload constructor.
@@ -37,7 +39,7 @@ Form.fromSchema = function(schema, extraParams) {
   // Process incoming schema into FormConfig
   // @TODO -- virtuals later.
   var formConfig = {
-    form: {},
+    options: {},
     fields: {}
   };
   _.each(paths, function(path, pathName) {
@@ -49,7 +51,8 @@ Form.fromSchema = function(schema, extraParams) {
       validators: path.validators
     }, path.options);
   });
-  var instance = new this(formConfig, extraParams);
+  // If extra params are truly needed, they should be getting injected at this level.
+  var instance = new this(formConfig);
   return instance;
 }
 

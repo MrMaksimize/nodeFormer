@@ -30,6 +30,7 @@
   },
   "devDependencies": {
     "chai": "^1.9.1",
+    "mongoose": "3.8.x",
     "mocha": "^1.19.0"
   }
 }

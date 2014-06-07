@@ -4,7 +4,7 @@ var chai = require('chai');
 var should = chai.should();
 var Field = require('../field');
 
-describe('Field', function() {
+describe('Field Object Operations', function() {
   before(function() {
   });
 
@@ -24,6 +24,10 @@ describe('Field', function() {
       fieldLabel: 'Monkey field',
       widget: 'text',
       required: false,
+      default: '',
+      multiple: false
+      prefix: '',
+      suffix: '',
     }
     var fieldInfo = { name: fieldConf.fieldName };
     var fieldOptions = { choices: [] };
@@ -59,6 +63,22 @@ describe('Field', function() {
     renderConfig.name.should.equal('something[awesomeName]');
   });
 
+});
+
+describe('Field configuration translations and inference', function() {
+
+  it('should determine proper widget from type', function() {
+
+  });
+
+  it('should get choices based on type and where they are passed', function() {});
+  it('should properly deal with nested structures', function() {});
+  it('should default to required false unless explicit', function(){});
+  it('should have capability to infer labels from names', function(){});
+  it('should handle default fields', function(){});
+  it('should have capability to override widget in configuration', function(){})
+  it('should flag multiplicity if passed', function(){});
+  it('should properly set suffix and prefix.', function(){});
 
 });
 

@@ -41,10 +41,15 @@ function Field(fieldInfo, formOptions) {
   var formOptions = formOptions || {};
   // Set proper defaults;
   var defaults = {
+    type: String,
     name: 'fieldName',
     label: 'fieldLabel',
     widget: 'text',
     required: false,
+    default: '',
+    multiple: false,
+    prefix: '',
+    suffix: '',
     choices: []
   };
 
