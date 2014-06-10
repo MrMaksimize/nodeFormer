@@ -32,9 +32,13 @@ describe ('Field', function() {
     it('should set suffix as empty string, but allow override');
     it('should be able to set choices from within field configuration');
     it('should be able to get choices from a callback method');
+    it('should properly set default choices');
+    it('should properly set default classes');
+    it('should properly set classes?');
     it('allow for field overloads as necessary');
     it('should get its own name based on use');
     it('should successfully generate its own render configuration');
+    it('should correctly default and set choiceOther');
   describe('Multiple', function(){});
   describe('Nested', function(){});
 });

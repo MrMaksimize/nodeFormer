@@ -30,6 +30,7 @@ var formConfig = {
         type: String,
         required: true,
         widget: 'checkbox',
+	choiceOther: true,
         tests: 'overrideWidget,inferLabel,overrideRequired,getChoicesFromOptions'
       },
       // A multiple text area field.

@@ -53,6 +53,7 @@ function Field(fieldInfo, formOptions) {
     label: 'fieldLabel',
     widget: 'text',
     required: false,
+    choiceOther:false,
     default: '',
     multiple: false,
     prefix: '',
