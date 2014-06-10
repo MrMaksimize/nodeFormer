@@ -1,7 +1,7 @@
 var _ = require('underscore')
 var S = require('string');
 var Field = require('./field');
-var flatten = require('flat').flatten;
+var unflatten = require('flat').unflatten;
 
 
 /*var nestedFlattener = function(object, prefix) {
@@ -38,19 +38,34 @@ function Form(formConfig) {
 
   _.each(this.fields, function(config, confName) {
     // Infer field name.
+    var immediateParent = '';
+    var parents = [];
+    if (S(confName).contains('.')) {
+      parents = confName.split('.');
+      // Remove last element since that is our current element.
+      parents.pop();
+      immediateParent = _.last(parents);
+    }
+    config.immediateParent = immediateParent;
+    config.parents = parents;
     config.name = _.isUndefined(config.name) ? confName : config.name;
     this.fields[confName] = new Field(config, this.options);
   }, this);
 }
 
 // TODO - dep this
-Form.prototype.getFieldsForRender = function() {
+Form.prototype.getRenderObject = function(options) {
+  var options = options || {};
   var fieldsForRender = {};
   _.each(this.fields, function(field, fieldKey) {
     fieldsForRender[fieldKey] = field.getRenderConfig();
   }, this);
   // @TODO -- this should be getting taken care of at fromSchema.
-  return _.omit(fieldsForRender, ['__v', '_id']);
+  fieldsForRender = _.omit(fieldsForRender, ['__v', '_id']);
+  if (options.unflatten) {
+    fieldsForRender = unflatten(fieldsForRender, { safe: true, object: true });
+  }
+  return { options: this.options, fields: fieldsForRender };
 };
 
 // Overload constructor for creation from Config.
@@ -59,7 +74,7 @@ Form.fromConfig = function(fields, options) {
   var fields = nestedFlattener(fields);
   console.log('mooo');
   console.log(fields);
-  // FUCK THIS SHIT>  IT"S GONNA ONLY WORK WITH MONGOOSE FOR NOW.
+  // F THIS S>  IT"S GONNA ONLY WORK WITH MONGOOSE FOR NOW.
 };
 
 // Overload constructor for creation from Schema.

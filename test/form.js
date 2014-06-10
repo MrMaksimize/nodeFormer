@@ -41,6 +41,8 @@ describe('Form', function() {
   };
 
   describe ('fromSchema', function(){
+    it('should get parents array from schema');
+    it('should get immediateParent from schema');
     it('should infer element name from schema', function() {
       formTester.elementName(forms.fromSchema);
     });
@@ -57,6 +59,8 @@ describe('Form', function() {
   });
 
   it('schema and conf object config should generate same form config');
+  it('should return to me a correct render object');
+  it('should return to me an unflattened render object');
 
 });
 
