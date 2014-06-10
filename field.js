@@ -34,14 +34,14 @@ var build = {
     console.log(fieldOptions);
     if (!_.isUndefined(fieldInfo.choices)) {
       if (_.isArray(fieldInfo.choices)) {
-	_.each(choicesList, function(element, index) {
-	  choices[element] = element;
-	});
+        _.each(choicesList, function(element, index) {
+          choices[element] = element;
+        });
       }
       if (_.isFunction(fieldInfo.choices)) {
-	// If it's a function, execute.
-	// TODO -- async.
-	choices = fieldInfo.choices(fieldObject, fieldInfo, fieldOptions);
+        // If it's a function, execute.
+        // TODO -- async.
+        choices = fieldInfo.choices(fieldObject, fieldInfo, fieldOptions);
       }
     }
     return choices;
