@@ -106,14 +106,8 @@ describe('Field configuration translations and inference', function() {
   });
 
   it('should get choices based on type and where they are passed', function() {
-    // Inline with configs.
-    // I FORGOT HOW TO DO THIS IN SHOULD
-    //form.fields.additionalDemographics.choices.
-    //console.log(form);
-    // In external list.
-    //form.fields.canBeReappliedFor
-    //form.fields.eligibleBusinessLocation
   });
+
   it('should properly deal with nested structures', function() {});
   it('should default to required false unless explicit', function(){
      // Check that we can override the required;
