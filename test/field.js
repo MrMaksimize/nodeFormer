@@ -97,7 +97,7 @@ describe('Field configuration translations and inference', function() {
     // String
     form.fields.title.widget.should.equal('text');
     // Number
-    form.fields.applicationCost.widget.should.equal('text');
+    form.fields.applicationCost.widget.should.equal('number');
     // Date
     form.fields.applicationDeadline.widget.should.equal('date');
     // Boolean
@@ -142,12 +142,8 @@ describe('Field configuration translations and inference', function() {
     form.fields.purpose.widget.should.equal('textArea');
     form.fields['agency.agencyContact.email'].widget.should.equal('email');
   });
-  it('should flag multiplicity if passed', function(){
-    // Still needs implementing.
-  });
-  it('should properly set suffix and prefix.', function(){
-    // Still needs implementing.
-  });
+  it('should flag multiplicity if passed');
+  it('should properly set suffix and prefix.');
 
 });
 

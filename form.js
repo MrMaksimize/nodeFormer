@@ -4,7 +4,7 @@ var Field = require('./field');
 var flatten = require('flat').flatten;
 
 
-var nestedFlattener = function(object, prefix) {
+/*var nestedFlattener = function(object, prefix) {
   if (_.isUndefined(prefix)) {
     prefix = '';
   }
@@ -26,7 +26,7 @@ var nestedFlattener = function(object, prefix) {
     }
   });
   return object;
-};
+};*/
 
 // Constructor
 function Form(formConfig) {

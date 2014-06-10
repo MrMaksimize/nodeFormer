@@ -38,7 +38,6 @@ describe('Form', function() {
 
   var forms = {
     fromSchema: nodeFormer.fromSchema(schema, formConfig.options),
-    fromConfig: nodeFormer.fromConfig(formConfig.fields, formConfig.options)
   };
   describe ('fromSchema', function(){
     it('should infer element name from schema', function() {
@@ -53,14 +52,8 @@ describe('Form', function() {
   describe('fromConfig', function() {
 
     it('should build nested field keys correctly');
-    it('should infer element name from config', function() {
-      formTester.elementName(forms.fromConfig);
-    });
-
-    it('should set multiples from schema', function() {
-      formTester.multiplicityTest(forms.fromConfig);
-    });
-
+    it('should infer element name from config');
+    it('should set multiples from schema');
   });
 
   it('schema and conf object config should generate same form config', function() {});
