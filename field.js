@@ -25,20 +25,42 @@ var build = {
   },
 
   choices: function(fieldObject, fieldInfo, fieldOptions) {
+    var choices = {};
+    console.log('fieldObject');
+    console.log(fieldObject);
+    console.log('fieldInfo');
+    console.log(fieldInfo);
+    console.log('fieldOptions');
+    console.log(fieldOptions);
+    if (!_.isUndefined(fieldInfo.choices)) {
+      if (_.isArray(fieldInfo.choices)) {
+	_.each(choicesList, function(element, index) {
+	  choices[element] = element;
+	});
+      }
+      if (_.isFunction(fieldInfo.choices)) {
+	// If it's a function, execute.
+	// TODO -- async.
+	choices = fieldInfo.choices(fieldObject, fieldInfo, fieldOptions);
+      }
+    }
+    return choices;
+  }
+
+  /*choices: function(fieldObject, fieldInfo, fieldOptions) {
     var choicesList = [];
     var directName = fieldObject.getName('direct');
 
     if (fieldOptions.choicesList && fieldOptions.choicesList[directName]) {
       var choicesList = fieldOptions.choicesList[fieldObject.getName('direct')];
     }
-    //var choicesList = fieldOptions.choicesList[fieldObject.getName('direct')] || [];
     var choices = {};
     _.each(choicesList, function(element, index) {
       choices[element] = element;
     });
 
     return choices;
-  },
+  },*/
 };
 
 // Constructor

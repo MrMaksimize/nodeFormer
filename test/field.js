@@ -8,16 +8,38 @@ var mongoose = require('mongoose');
 var mocks = require('./mocks.js');
 
 var fieldTester = {
-  verifyFieldBasic: function() {
+  inferWidget: function(config, result) {
   }
 };
 
 describe ('Field', function() {
+  var formConfig = mocks.formConfig;
+
+  // Mock schema from above configurations.
+  var schema = new mongoose.Schema(formConfig.fields);
+
+  var forms = {
+    fromSchema: nodeFormer.fromSchema(schema, formConfig.options),
+  };
+
+  describe('Simple', function(){});
+    it('should infer widget based on type, but allow override');
+    it('shold infer label based on name, but allow override');
+    it('should set required false by default, but allow override');
+    it('should set default as empty string, but allow override');
+    it('should set multiple to false, but allow override');
+    it('should set prefix as empty string, but allow override');
+    it('should set suffix as empty string, but allow override');
+    it('should be able to set choices from within field configuration');
+    it('should be able to get choices from a callback method');
+    it('allow for field overloads as necessary');
+    it('should get its own name based on use');
+    it('should successfully generate its own render configuration');
   describe('Multiple', function(){});
   describe('Nested', function(){});
 });
 
-describe('Field Object Operations', function() {
+describe('Simple Field Operations', function() {
   before(function() {
   });
 
