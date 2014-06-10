@@ -7,6 +7,16 @@ var Field = require('../field');
 var mongoose = require('mongoose');
 var mocks = require('./mocks.js');
 
+var fieldTester = {
+  verifyFieldBasic: function() {
+  }
+};
+
+describe ('Field', function() {
+  describe('Multiple', function(){});
+  describe('Nested', function(){});
+});
+
 describe('Field Object Operations', function() {
   before(function() {
   });
@@ -99,7 +109,7 @@ describe('Field configuration translations and inference', function() {
     // Inline with configs.
     // I FORGOT HOW TO DO THIS IN SHOULD
     //form.fields.additionalDemographics.choices.
-    console.log(form);
+    //console.log(form);
     // In external list.
     //form.fields.canBeReappliedFor
     //form.fields.eligibleBusinessLocation

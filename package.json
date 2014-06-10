@@ -25,6 +25,7 @@
   },
   "homepage": "https://github.com/MrMaksimize/nodeFormer",
   "dependencies": {
+    "flat": "^1.2.1",
     "string": "^1.8.1",
     "underscore": "^1.6.0"
   },

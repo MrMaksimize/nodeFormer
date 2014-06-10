@@ -1,10 +1,33 @@
 var _ = require('underscore');
-var string = require('string');
+var S = require('string');
 var chai = require('chai');
 var should = chai.should();
 var nodeFormer = require('../form.js');
 var mongoose = require('mongoose');
 var mocks = require('./mocks.js');
+
+var formTester = {
+  elementName: function(form) {
+    // Top Level Field Inference
+    form.fields['applicationCost'].name.should.equal('applicationCost');
+    form.fields['applicationCost'].label.should.equal('Application cost');
+    // Top Level Field Override
+    form.fields['aFieldWithNoName'].name.should.equal('clintEastwood');
+    form.fields['aFieldWithNoName'].label.should.equal('Clint eastwood');
+    // Nested Field Inferrence.
+    form.fields['agency.agencyContact.name'].name.should.equal('agency.agencyContact.name');
+    form.fields['agency.agencyContact.name'].label.should.equal('Agency Contact Name');
+    // Nested Field Override.
+    form.fields['agency.aFieldWithNoNameNested'].name.should.equal('clintEastwoodNested');
+    form.fields['agency.aFieldWithNoNameNested'].label.should.equal('Clint eastwood nested');
+  },
+  multiplicityTest: function(form) {
+    form.fields.paperworkRequired.multiple.should.be.true;
+    form.fields.additionalDemographics.multiple.should.be.true;
+    form.fields['agency.aMultipleFieldNested'].multiple.should.be.true;
+    form.fields.purpose.multiple.should.be.false;
+  }
+};
 
 describe('Form', function() {
   // Set up the forms.
@@ -13,36 +36,34 @@ describe('Form', function() {
   // Mock schema from above configurations.
   var schema = new mongoose.Schema(formConfig.fields);
 
-  it('should set proper defaults on initialization', function() {
-    var form = new nodeFormer(formConfig);
-    // Test that name properly got inferred on the fields and placed properly.
-    form.fields.yourName.name.should.equal('yourName');
-    form.fields.yourName.label.should.equal('Your name');
-    // Test that the proper widget was inferred from the type.
-    form.fields.yourName.widget.should.equal('text');
-    // Check that choices list got set to blank.
-    form.options.choicesList.should.be.an('array');
+  var forms = {
+    fromSchema: nodeFormer.fromSchema(schema, formConfig.options),
+    fromConfig: nodeFormer.fromConfig(formConfig.fields, formConfig.options)
+  };
+  describe ('fromSchema', function(){
+    it('should infer element name from schema', function() {
+      formTester.elementName(forms.fromSchema);
+    });
+
+    it('should set multiples from schema', function() {
+      formTester.multiplicityTest(forms.fromSchema);
+    });
   });
 
-  it('should create itself from a schema', function() {
-    var form = nodeFormer.fromSchema(schema);
-    console.log(form);
-    // We need to test everything from the overloaded constructor
-    // to the point where it's passed off to the field system.
-    // Verify that nested fields properly got broken down;
-    // Verify that choices properly got injected at the form level.
-    // Verify that multiple fields properly got handled.
+  describe('fromConfig', function() {
+
+    it('should build nested field keys correctly');
+    it('should infer element name from config', function() {
+      formTester.elementName(forms.fromConfig);
+    });
+
+    it('should set multiples from schema', function() {
+      formTester.multiplicityTest(forms.fromConfig);
+    });
+
   });
-  it('should create itself from a conf object', function() {});
 
   it('schema and conf object config should generate same form config', function() {});
-  /*it('should properly translate schema to form configurations', function(){
-    var form = nodeFormer.fromSchema(schema);
-    var refFields = formConfig.fields;
-    console.log(refFields.title.type.name);
-  });*/
-
 
 });
-
 

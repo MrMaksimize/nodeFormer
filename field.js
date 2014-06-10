@@ -2,6 +2,12 @@ var _ = require('underscore')
 var S = require('string');
 
 var build = {
+  type: function(fieldObject, fieldInfo, fieldOptions) {
+    if (!_.isString(fieldObject.type)) {
+      return fieldObject.type.name;
+    }
+  },
+
   label: function(fieldObject, fieldInfo, fieldOptions) {
     // Can depend on name being there.
     return fieldObject.getName('label');
