@@ -48,16 +48,16 @@ describe ('Field', function() {
     it('should set suffix as empty string, but allow override');
     it('should be able to set choices from an array within field configuration', function() {
       fieldTester.testGetChoices(
-	formConfig.fields.canBeReappliedFor,
-	forms.fromSchema.fields.canBeReappliedFor,
-	'array'
+        formConfig.fields.canBeReappliedFor,
+        forms.fromSchema.fields.canBeReappliedFor,
+        'array'
       );
     });
     it('should be able to set choices from an object within field configuration', function() {
       fieldTester.testGetChoices(
-	formConfig.fields.eligibleBusinessLocation,
-	forms.fromSchema.fields.eligibleBusinessLocation,
-	'object'
+        formConfig.fields.eligibleBusinessLocation,
+        forms.fromSchema.fields.eligibleBusinessLocation,
+        'object'
       );
     });
     it('should be able to get choices from a callback method');

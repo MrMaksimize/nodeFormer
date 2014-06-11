@@ -20,7 +20,7 @@ var formConfig = {
         type: String,
         default: false,
         widget: 'select',
-	choices: ['Yes', 'No']
+        choices: ['Yes', 'No']
       },
       // A string type field with a checkbox widget that will need to find choices and have an other field.
       // TODO -- test and implement choice other.
@@ -29,7 +29,7 @@ var formConfig = {
         required: true,
         widget: 'checkbox',
         choiceOther: true,
-	choices: { 'puerto_rico': 'Puerto Rico', 'united_states': 'United States' }
+        choices: { 'puerto_rico': 'Puerto Rico', 'united_states': 'United States' }
       },
       // A multiple text area field.
       paperworkRequired: [{

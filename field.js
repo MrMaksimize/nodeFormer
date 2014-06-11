@@ -28,7 +28,7 @@ var build = {
     var choices = {};
     if (_.isArray(fieldInfo.choices)) {
       _.each(fieldInfo.choices, function(element, index) {
-	choices[index] = element;
+        choices[index] = element;
       });
     }
     else if (_.isFunction(fieldInfo.choices)) {
