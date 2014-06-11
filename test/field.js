@@ -9,18 +9,34 @@ var mocks = require('./mocks.js');
 
 var fieldTester = {
   inferWidget: function(config, result) {
+  },
+  testGetChoices: function(config, result, operation) {
+    if (operation == 'array') {
+      result.choices[0].should.equal(config.choices[0]);
+      result.choices[1].should.equal(config.choices[1]);
+    }
+    if (operation == 'object') {
+      result.choices.should.be.an('object');
+      result.choices.should.equal(config.choices)
+    }
+    if (operation == 'callback') {
+    }
+    result.choices.should.be.an('object');
   }
 };
 
 describe ('Field', function() {
-  var formConfig = mocks.formConfig;
-
-  // Mock schema from above configurations.
-  var schema = new mongoose.Schema(formConfig.fields);
-
-  var forms = {
-    fromSchema: nodeFormer.fromSchema(schema, formConfig.options),
-  };
+  var formConfig = {};
+  var schema = {};
+  var forms = {};
+  before(function() {
+    formConfig = mocks.formConfig;
+    // Mock schema from above configurations.
+    schema = new mongoose.Schema(formConfig.fields);
+    forms = {
+      fromSchema: nodeFormer.fromSchema(schema, formConfig.options),
+    };
+ });
 
   describe('Simple', function(){});
     it('should infer widget based on type, but allow override');
@@ -30,10 +46,21 @@ describe ('Field', function() {
     it('should set multiple to false, but allow override');
     it('should set prefix as empty string, but allow override');
     it('should set suffix as empty string, but allow override');
-    it('should be able to set choices from within field configuration');
+    it('should be able to set choices from an array within field configuration', function() {
+      fieldTester.testGetChoices(
+	formConfig.fields.canBeReappliedFor,
+	forms.fromSchema.fields.canBeReappliedFor,
+	'array'
+      );
+    });
+    it('should be able to set choices from an object within field configuration', function() {
+      fieldTester.testGetChoices(
+	formConfig.fields.eligibleBusinessLocation,
+	forms.fromSchema.fields.eligibleBusinessLocation,
+	'object'
+      );
+    });
     it('should be able to get choices from a callback method');
-    it('should properly set default choices');
-    it('should properly set default classes');
     it('should properly set classes?');
     it('allow for field overloads as necessary');
     it('should get its own name based on use');

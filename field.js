@@ -26,17 +26,18 @@ var build = {
 
   choices: function(fieldObject, fieldInfo, fieldOptions) {
     var choices = {};
-    if (!_.isUndefined(fieldInfo.choices)) {
-      if (_.isArray(fieldInfo.choices)) {
-        _.each(choicesList, function(element, index) {
-          choices[element] = element;
-        });
-      }
-      if (_.isFunction(fieldInfo.choices)) {
-        // If it's a function, execute.
-        // TODO -- async.
-        choices = fieldInfo.choices(fieldObject, fieldInfo, fieldOptions);
-      }
+    if (_.isArray(fieldInfo.choices)) {
+      _.each(fieldInfo.choices, function(element, index) {
+	choices[index] = element;
+      });
+    }
+    else if (_.isFunction(fieldInfo.choices)) {
+      // If it's a function, execute.
+      // TODO -- async.
+      choices = fieldInfo.choices(fieldObject, fieldInfo, fieldOptions);
+    }
+    else if (_.isObject(fieldInfo.choices)) {
+      choices = fieldInfo.choices;
     }
     return choices;
   }
@@ -68,7 +69,7 @@ function Field(fieldInfo, formOptions) {
   // Construct each element using private builders.
   _.each(field, function(element, index) {
     this[index] = element;
-    if (build[index] && (_.isEmpty(element) || element == defaults[index])) {
+    if (build[index] && (_.isEmpty(element) || element == defaults[index] || index == 'choices')) {
       this[index] = build[index](this, fieldInfo, formOptions);
     }
   }, this);
